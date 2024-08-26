@@ -1,0 +1,15 @@
+bool isSubstring(string s1, string s2) {
+    return s2.find(s1) != string::npos;
+}
+
+vector<string> splitStringBySpace(string str) {
+    vector<string> result;
+    istringstream iss(str);
+    string word;
+    while (iss >> word) {
+        result.push_back(word);
+    }
+    return result;
+}
+
+
