@@ -1,0 +1,22 @@
+vector<int> decimalToBinary(int decimalValue) {
+    vector<int> binaryVector;
+    if (decimalValue == 0) {
+        binaryVector.push_back(0);
+        return binaryVector;
+    }
+    while (decimalValue > 0) {
+        binaryVector.push_back(decimalValue % 2);
+        decimalValue /= 2;
+    }
+    reverse(binaryVector.begin(), binaryVector.end());
+    return binaryVector;
+}
+
+int binaryToDecimal(vector<int>& binaryVector) {
+    int decimalValue = 0;
+    int size = binaryVector.size();
+    for (int i = 0; i < size; ++i) {
+        decimalValue += binaryVector[i] * pow(2, size - 1 - i);
+    }
+    return decimalValue;
+}
