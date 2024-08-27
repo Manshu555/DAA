@@ -26,7 +26,7 @@ double knapsack(vector<pair<int,int>>& object, int n, int M) {
         }
 
         Total_profit += (double(x_taken) / weight) * profit;
-        cout << (double(x_taken) / weight) * profit<< " " << Total_profit << endl;
+        // cout << (double(x_taken) / weight) * profit<< " " << Total_profit << endl;
         M -= x_taken;
     }
     return Total_profit;
