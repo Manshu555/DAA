@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findParent(int u, vector<int>& parent) {
+    if (parent[u] == u)
+        return u;
+    return parent[u] = findParent(parent[u], parent); // Path compression
+}
+
+void unionSets(int u, int v, vector<int>& parent, vector<int>& rank) {
+    u = findParent(u, parent);
+    v = findParent(v, parent);
+
+    if (rank[u] < rank[v]) {
+        parent[u] = v;
+    } else if (rank[u] > rank[v]) {
+        parent[v] = u;
+    } else {
+        parent[v] = u;
+        rank[u]++;
+    }
+}
+
+int kruskalMST(int V, vector<vector<int>>& edges) {
+    // Sort all edges based on weight
+    sort(edges.begin(), edges.end(), [](vector<int>& a,vector<int>& b) {
+        return a[2] < b[2];
+    });
+
+    vector<int> parent(V);
+    vector<int> rank(V, 0);
+    vector<vector<int>> result; // Store the result MST
+
+    // Initialize the parent array for each vertex
+    for (int i = 0; i < V; i++) {
+        parent[i] = i;
+    }
+
+    // Process each edge in the sorted order
+    for (auto edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int weight = edge[2];
+
+        int setU = findParent(u, parent);
+        int setV = findParent(v, parent);
+
+        // If u and v belong to different sets, include this edge in the MST
+        if (setU != setV) {
+            result.push_back(edge);
+            unionSets(setU, setV, parent, rank);
+        }
+    }
+
+    int totalWeight = 0;
+    for (auto edge : result) {
+        cout << edge[0] << " - " << edge[1] << " : " << edge[2] << endl;
+        totalWeight += edge[2];
+    }
+    return totalWeight;
+}
+
+int main() {
+    int V;
+    cin>>V;
+    vector<vector<int>> edges(V+1,vector <int>(3)) ; // edge = vertices +1
+    for(int i=0;i<V+1;i++){
+        for(int j=0;j<3;j++){
+            cin>>edges[i][j];
+        }
+    }
+    cout<<kruskalMST(V, edges);
+
+    return 0;
+}
