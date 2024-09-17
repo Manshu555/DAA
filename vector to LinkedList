@@ -1,0 +1,12 @@
+ListNode* vectorToLinkedList(vector<int>& vec) {
+    if (vec.empty()) return nullptr;
+
+    ListNode* head = new ListNode(vec[0]);
+    ListNode* current = head;
+
+    for (int i = 1; i < vec.size(); ++i) {
+        current->next = new ListNode(vec[i]);
+        current = current->next;
+    }
+    return head;
+}
