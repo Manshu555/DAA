@@ -13,3 +13,11 @@ vector<string> splitStringBySpace(string str) {
 }
 
 
+
+// Build the result string
+        string result;
+        for (auto i : vec) {
+            result += string(i.second, i.first); // Append character i.first, i.second times
+        }
+
+
