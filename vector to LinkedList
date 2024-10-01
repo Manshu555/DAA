@@ -10,3 +10,15 @@ ListNode* vectorToLinkedList(vector<int>& vec) {
     }
     return head;
 }
+
+ ListNode* vectolistNode(priority_queue<int, vector<int>, greater<int>>& pq) {
+        ListNode* headptr = new ListNode(0); // Dummy head
+        ListNode* dummy = headptr;
+
+        while (!pq.empty()) {
+            dummy->next = new ListNode(pq.top());
+            pq.pop();
+            dummy = dummy->next;
+        }
+        return headptr->next;
+    }
