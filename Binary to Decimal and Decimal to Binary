@@ -40,3 +40,20 @@ int btod(string & binaryVector) {
     }
     return decimalValue;
 }
+
+// with padding
+string dtob(int n, int width) {
+        if (n == 0) {
+            return string(width, '0');
+        }
+
+        string binary = "";
+        while (n > 0) {
+            binary = to_string(n % 2) + binary;
+            n /= 2;
+        }
+        while (binary.length() < width) {
+            binary = '0' + binary;
+        }
+        return binary;
+    }
