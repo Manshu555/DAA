@@ -25,5 +25,5 @@ int main() {
 }
 /*
 Time Complexity: O(N * W). As redundant calculations of states are avoided
-Auxiliary Space: O(W) As we are using a 1-D array instead of a 2-D array
+Auxiliary Space: O(N * W) As we are using a 1-D array instead of a 2-D array
 */
