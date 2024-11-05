@@ -1,14 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-int knapSack(int W, int wt[], int val[], int n) {
+int knapSack(int W, int wt[], int P[], int n) {
     vector<vector<int> > K(n + 1, vector<int>(W + 1));
-
     for (int i = 0; i <= n; i++) {
         for (int w = 0; w <= W; w++) {
             if (i == 0 || w == 0)
                 K[i][w] = 0;
-            else if (wt[i - 1] <= w)
-                K[i][w] = max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
+            else if (wt[i] <= w)
+                K[i][w] = max(P[i] + K[i - 1][w - wt[i]], K[i - 1][w]);
             else
                 K[i][w] = K[i - 1][w];
         }
