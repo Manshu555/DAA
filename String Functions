@@ -21,3 +21,8 @@ vector<string> splitStringBySpace(string str) {
         }
 
 
+
+// search in string vec[i] = burger searchWord = "burg"
+vec[i].find(searchWord) == 0
+
+
