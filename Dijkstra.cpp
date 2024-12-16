@@ -1,65 +1,50 @@
-#include <bits/stdc++.h>
-using namespace std;
+/*
+	MY YOUTUBE VIDEO ON THIS Qn : https://www.youtube.com/watch?v=xQ3vjWwFRuI
+	Company Tags		    : Flipkart, Microsoft
+	GfG Link		    : https://practice.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1
+*/
 
-#define INF 0x3f3f3f3f
+//Time : O(E * log(V))
+//E = number of edges
+//V = number of vertices
+class Solution
+{
+	public:
+	   //Function to find the shortest distance of all the vertices
+    	   //from the source vertex S.
+	    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S) {
 
-typedef pair<int, int> iPair;
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
-class Graph {
-    int V; 
-    list<iPair> *adj; 
+		vector<int> result(V, INT_MAX);
 
-public:
-    Graph(int V);
+		result[S] = 0;
+		pq.push({0, S});
+		//NOTE - You can add a visited vector to avoid revisiting a node again and again. It will reduce the time complexity.
 
-    void addEdge(int u, int v, int w);
-    void shortestPath(int s);
+		while(!pq.empty()) {
+
+		    int d  = pq.top().first;
+		    int node = pq.top().second;
+		    pq.pop();
+
+		    for(auto &vec : adj[node]) {
+
+			int adjNode = vec[0];
+			int dist    = vec[1];
+
+			if(d + dist < result[adjNode]) {
+
+			    result[adjNode] = d + dist;
+			    pq.push({d+dist, adjNode});
+
+			}
+
+		    }
+
+		}
+
+		return result;
+
+	    }
 };
-
-Graph::Graph(int V) {
-    this->V = V;
-    adj = new list<iPair>[V];
-}
-
-void Graph::addEdge(int u, int v, int w) {
-    adj[u].push_back(make_pair(v, w));
-    adj[v].push_back(make_pair(u, w)); 
-}
-void Graph::shortestPath(int src) {
-    priority_queue<iPair, vector<iPair>, greater<iPair>> pq;
-    vector<int> dist(V, INF);
-    pq.push(make_pair(0, src));
-    dist[src] = 0;
-    while (!pq.empty()) {
-        int u = pq.top().second;
-        pq.pop();
-        for (auto &neighbor : adj[u]) {
-            int v = neighbor.first;
-            int weight = neighbor.second;
-            if (dist[v] > dist[u] + weight) {
-                dist[v] = dist[u] + weight;
-                pq.push(make_pair(dist[v], v));
-            }
-        }
-    }
-    cout << "Vertex Distance from Source" << endl;
-    for (int i = 0; i < V; ++i)
-        cout << i << " \t\t " << dist[i] << endl;
-}
-
-int main() {
-    int V = 6; 
-    Graph g(V);
-    g.addEdge(0,1,4);
-    g.addEdge(0,3,9);
-    g.addEdge(0,2,8);
-    g.addEdge(1,3,2);
-    g.addEdge(1,5,3);
-    g.addEdge(1,4,7);
-    g.addEdge(4,5,6);
-    g.addEdge(2,3,5);
-    g.addEdge(2,5,1);
-    g.addEdge(3,5,5);
-    g.shortestPath(0);
-    return 0;
-}
